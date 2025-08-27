@@ -1,27 +1,28 @@
-from Tools import kafka_consumer , kafka_producer, cleaner
+from Tools import  cleaner ,sub_pub
 import ast
 
 class Preprocessor:
 
-    def __init__(self , topic_a_to_listen, topic_b_to_listen):
-        self.con_a = kafka_consumer.Subscriber(topic_a_to_listen).consumer
-        self.con_b = kafka_consumer.Subscriber(topic_b_to_listen).consumer
-        self.pub = kafka_producer.Produce()
-
-
     @staticmethod
-    def add_clean_text_and_send(topic_to_send ,consumer , publisher:kafka_producer.Produce):
+    def add_clean_text_and_send(topic_to_send_for_antisemitic ,topic_to_send_for_not_antisemitic ,consumer , publisher):
         for message in consumer:
             dic_ = message.value
             text = dic_['text']
             dic_['clean_text'] = cleaner.Cleaner.activate_all_functions(text)
-            publisher.publish_message(topic_to_send , dic_)
+            if message.topic   == 'raw_tweets_antisemitic':
+                publisher.publish_message(topic_to_send_for_antisemitic , dic_)
+                print("11")
+            elif message.topic == "raw_tweets_not_antisemitic":
+                publisher.publish_message(topic_to_send_for_not_antisemitic , dic_)
+                # print("00")
 
 
 
 
 
 
-p = Preprocessor('raw_tweets_antisemitic' , 'raw_tweets_not_antisemitic')
-Preprocessor.add_clean_text_and_send('preprocessed_tweets_antisemitic' ,consumer= p.con_a ,publisher= p.pub)
-Preprocessor.add_clean_text_and_send('preprocessed_tweets_not_antisemitic' ,consumer= p.con_b ,publisher= p.pub)
+
+if __name__ == '__main__':
+
+    con , sub = sub_pub.sub_and_pub( 'raw_tweets_antisemitic' , 'raw_tweets_not_antisemitic')
+    Preprocessor.add_clean_text_and_send('preprocessed_tweets_antisemitic' ,"preprocessed_tweets_not_antisemitic",consumer= con ,publisher= sub)
