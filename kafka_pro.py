@@ -1,7 +1,6 @@
 from kafka import KafkaProducer
 import json
 
-
 class Produce:
     def __init__(self):
         self.producer = KafkaProducer(bootstrap_servers=["localhost:9092"],
@@ -10,3 +9,4 @@ class Produce:
 
     def publish_message(self,topic, message):
         self.producer.send(topic, message)
+        self.producer.flush()

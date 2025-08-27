@@ -13,5 +13,6 @@ class CollectionFetcher:
         self.DB = self.connection[self.DBNAME]
         self.collection = self.DB[collection]
 
-a = CollectionFetcher('tweets')
-print(a.collection.find_one())
+# a = CollectionFetcher('tweets')
+# for i in a.collection.find():
+#     print(i)
