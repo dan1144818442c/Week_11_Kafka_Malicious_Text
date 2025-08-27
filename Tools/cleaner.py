@@ -33,3 +33,12 @@ class Cleaner:
         lemmatized_output = ' '.join([lemmatizer.lemmatize(w) for w in word_list])
         return  lemmatized_output
 
+    @staticmethod
+    def activate_all_functions(text):
+        text_without_marks = Cleaner.remove_special_characters_and_marks(text)
+        text_removing_unnecessary_spaces = Cleaner.removing_unnecessary_spaces(text_without_marks)
+        text_removing_stop_words = Cleaner.removing_stop_words(text_removing_unnecessary_spaces)
+        text_in_lowercase= Cleaner.get_text_in_lowercase(text_removing_stop_words)
+        text_matize = Cleaner.get_matize_text(text_in_lowercase)
+        return text_matize
+# print(Cleaner.activate_all_functions("ghfjgkh dgfbn    sfhj BHGRRV a bugs 58 * / 0456 jnf8 543%$#@"))
