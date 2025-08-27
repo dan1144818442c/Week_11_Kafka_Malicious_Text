@@ -10,3 +10,4 @@ class Produce:
 
     def publish_message(self,topic, message):
         self.producer.send(topic, message)
+        self.producer.flush()
