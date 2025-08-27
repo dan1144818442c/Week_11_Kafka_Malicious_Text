@@ -21,8 +21,8 @@ class Enricher:
 
     def detect_weapons_in_messages(self,weapon_path:str):
         for message in self.messages:
-            weapons = self.weapons_detected(weapon_path,message["clean_text"])
-            self.messages[message]["weapons_detected"] = weapons
+            weapons = self.weapons_detected(weapon_path,message.value["clean_text"])
+            self.messages[message].value["weapons_detected"] = weapons
         return self.messages
 
     def _weapon_list(self,weapon_path:str):
@@ -41,8 +41,9 @@ class Enricher:
 
     def add_relevant_timestamps(self):
         for message in self.messages:
-            last_time = self.relevant_timestamp(message["original_text"])
-            self.messages[message]["relevant_timestamp"] = max(last_time)
+            last_time = self.relevant_timestamp(message.value["original_text"])
+            self.messages[message].value["relevant_timestamp"] = max(last_time)
+        return self.messages
 
     def find_emotion_of_text(self,text:str):
         score = SentimentIntensityAnalyzer().polarity_scores(text)
@@ -58,17 +59,6 @@ class Enricher:
 
     def add_sentiment_to_messages(self):
         for message in self.messages:
-            emotion = self.find_emotion_of_text(message["original_text"])
-            self.messages[message]["sentiment"] = emotion
-
-if __name__ == "__main__":
-    jn = {
-    "id": "64fcf0d2a1b23c0012345678",
-    "createdate":"2020-03-24T09:28:15.000+00:00",
-    "antisemietic": 0,
-    "original_text": "Tomorrow (25/03/2020 09:30) we will attack using a(24/04/2420 09:30) gun (AK-47) near the border",
-    "clean_text": "tomorrow attack use gun ak-47 near border",
-    "sentiment": "negative",
-    "weapons_detected": ["gun","AK-47"],
-    "relevant_timestamp": "25/03/2020"
-  }
+            emotion = self.find_emotion_of_text(message.value["original_text"])
+            self.messages[message].value["sentiment"] = emotion
+        return self.messages
