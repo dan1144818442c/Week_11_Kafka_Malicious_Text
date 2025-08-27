@@ -12,7 +12,3 @@ class CollectionFetcher:
         self.connection = pymongo.MongoClient(f'mongodb+srv://{self.USER}:{self.PASS}@cluster0.6ycjkak.mongodb.net/')
         self.DB = self.connection[self.DBNAME]
         self.collection = self.DB[collection]
-
-# a = CollectionFetcher('tweets')
-# for i in a.collection.find():
-#     print(i)

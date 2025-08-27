@@ -1,0 +1,8 @@
+time
+pymongo
+dotenv
+os
+kafka-python
+string
+re
+nltk
