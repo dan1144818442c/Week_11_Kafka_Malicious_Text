@@ -21,7 +21,3 @@ if __name__ == '__main__':
     add_enricher_func('enriched_preprocessed_tweets_antisemitic' , 'enriched_preprocessed_tweets_not_antisemitic' , consumer=con , publisher=sub , path_weapon_list=r'C:\Users\1\Desktop\DATA_Analiza\project_27_8_analiza\Enricher\weapon_list.txt')
 
 
-
-
-
-
