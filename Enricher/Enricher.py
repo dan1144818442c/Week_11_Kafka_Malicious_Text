@@ -26,8 +26,11 @@ class Enricher:
         return self.messages
 
     def _weapon_list(self,weapon_path:str):
-        with open(weapon_path, "r") as weapons:
-            return weapons.read().splitlines()
+        try:
+            with open(weapon_path, "r",encoding='utf-8') as weapons:
+                return weapons.read().split()
+        except:
+            return ["file weapons not find..."]
 
     def relevant_timestamp(self,text:str):
         date_time_pattern = r"\d{2}/\d{2}/\d{4}"
