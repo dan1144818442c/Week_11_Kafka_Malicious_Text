@@ -20,7 +20,7 @@ def program_run_100_per_min(kafka_publisher,collection_fetch,sort_by,list_fields
     skip_amount = 0
     while True:
         count = 0
-        for document in collection_fetch.collection.find().sort(sort_by, pymongo.DESCENDING).limit(100).skip(skip_amount):
+        for document in collection_fetch.collection.find().sort(sort_by, pymongo.ASCENDING).limit(100).skip(skip_amount):
             count += 1
             if list_fields_str is not None:
                 for field in list_fields_str:
