@@ -1,9 +1,10 @@
-from kafka_pro import Produce
-from reciever import CollectionFetcher
+
+from Tools import kafka_producer,kafka_consumer
+from .reciever import CollectionFetcher
 import pymongo
 import time
 
-kafka = Produce()
+kafka = kafka_producer.Produce()
 
 col = CollectionFetcher('tweets')
 
@@ -22,15 +23,17 @@ def program_run_100_per_min(kafka_publisher,collection_fetch,sort_by,list_fields
         count = 0
         for document in collection_fetch.collection.find().sort(sort_by, pymongo.ASCENDING).limit(100).skip(skip_amount):
             count += 1
+            print(document)
             if list_fields_str is not None:
                 for field in list_fields_str:
                     str_change(document,field)
+
             kafka_publisher.publish_message(topic=topic_name(document), message=document)
-        print(count)
         skip_amount += count
         time.sleep(60)
 
 
 if __name__ == '__main__':
+
 
     program_run_100_per_min(kafka,col,'CreateDate',['_id','CreateDate'])
