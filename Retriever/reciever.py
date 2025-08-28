@@ -11,4 +11,5 @@ class CollectionFetcher:
         self.DBNAME = os.getenv('DBNAME',default='IranMalDB')
         self.connection = pymongo.MongoClient(f'mongodb+srv://{self.USER}:{self.PASS}@cluster0.6ycjkak.mongodb.net/')
         self.DB = self.connection[self.DBNAME]
+
         self.collection = self.DB[collection]
