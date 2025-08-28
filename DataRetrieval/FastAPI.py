@@ -2,16 +2,20 @@ import uvicorn
 from fastapi import FastAPI
 from pymongo import MongoClient
 
+def serialize_document(doc):
+    doc["_id"] = str(doc["_id"])  # ObjectId -> string
+    return doc
+
 def mongo(database_name:str,collection_name:str):
     try:
         client = MongoClient('mongodb://localhost:27017/')
         db = client[database_name]
         collection = db[collection_name]
-        all_documents = collection.find({})
+        all_documents = list(collection.find({}))
         client.close()
-        return all_documents
+        return [serialize_document(doc) for doc in all_documents]
     except Exception as e :
-        return {"Database reading error:":e}
+        return {"Database reading error:":str(e)}
 
 app = FastAPI()
 @app.get("/{collection_name}")

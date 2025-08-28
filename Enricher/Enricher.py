@@ -33,10 +33,10 @@ class Enricher:
             return ["file weapons not find..."]
 
     def relevant_timestamp(self,text:str):
-        date_time_pattern = r"\d{2}/\d{2}/\d{4}"
+        date_time_pattern = r"\d{4}-\d{2}-\d{2}"
         times = re.findall(date_time_pattern,text)
         last_time = []
-        format_string = "%d/%m/%Y"
+        format_string = "%Y-%m-%d"
         for time in times:
             time = datetime.strptime(time,format_string)
             last_time.append(time)
