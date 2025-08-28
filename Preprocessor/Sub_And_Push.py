@@ -1,6 +1,4 @@
 from Tools import  cleaner ,sub_pub
-import ast
-
 class Preprocessor:
 
     @staticmethod
@@ -9,12 +7,16 @@ class Preprocessor:
             dic_ = message.value
             text = dic_['text']
             dic_['clean_text'] = cleaner.Cleaner.activate_all_functions(text)
+            if "TweetID" in dic_:
+                del dic_["TweetID"]
             if message.topic   == 'raw_tweets_antisemitic':
                 publisher.publish_message(topic_to_send_for_antisemitic , dic_)
-                print("11")
+                print(dic_)
+                # print("pro - aaaaaa")
             elif message.topic == "raw_tweets_not_antisemitic":
                 publisher.publish_message(topic_to_send_for_not_antisemitic , dic_)
-                # print("00")
+                print(dic_)
+                # print("pro notttt")
 
 
 

@@ -2,7 +2,7 @@ FROM python:3.13-slim
 
 WORKDIR /app
 
-COPY /Retriever/requirements.txt .
+COPY /Enricher/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -10,8 +10,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY /Tools /app/Tools
 
 
-COPY /Retriever /app/Retriever
+COPY /Enricher /app/Enricher
 
 
-CMD ["python", "-m" , "Retriever.main"]
+CMD ["python", "-m" , "Enricher.Sub_and_pub"]
 

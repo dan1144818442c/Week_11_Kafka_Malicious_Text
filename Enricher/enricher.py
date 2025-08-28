@@ -3,6 +3,8 @@ import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from datetime import datetime
 nltk.download('/usr/local/share/nltk_data')
+nltk.download('vader_lexicon')
+
 
 class Enricher_C:
 
@@ -34,10 +36,10 @@ class Enricher_C:
             return weapons.read().splitlines()
 
     def relevant_timestamp(self,text:str):
-        date_time_pattern = r"\d{2}/\d{2}/\d{4}"
+        date_time_pattern = r"\d{4}-\d{2}-\d{2}"
         times = re.findall(date_time_pattern,text)
         last_time = []
-        format_string = "%d/%m/%Y"
+        format_string = "%Y-%m-%d"
         for time in times:
             time = datetime.strptime(time,format_string)
             last_time.append(time)
@@ -46,7 +48,8 @@ class Enricher_C:
     def add_relevant_timestamps(self):
         last_time = self.relevant_timestamp(self.dict_["text"])
         if len(last_time) > 0:
-            self.dict_["relevant_timestamp"] = max(last_time)
+            max_time = max(last_time)
+            self.dict_["relevant_timestamp"] = str(max_time)
         else:
             self.dict_["relevant_timestamp"] = ""
         return self.dict_
