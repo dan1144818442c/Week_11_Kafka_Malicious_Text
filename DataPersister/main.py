@@ -1,3 +1,4 @@
+
 from Tools.kafka_consumer import Subscriber
 from DataPersister.mongo_send import CollectionPlacer
 
@@ -9,6 +10,7 @@ if __name__ == '__main__':
 
     for message in subscriber.consumer:
         if message.topic == 'enriched_preprocessed_tweets_antisemitic':
+
             print(message.value)
             mongo_anti.insert(message.value)
         else:
