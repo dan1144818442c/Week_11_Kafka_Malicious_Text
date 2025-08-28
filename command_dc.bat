@@ -12,7 +12,7 @@ docker run --name mongodb  --network=mynetw -p 27017:27017 -d mongodb/mongodb-co
 
 docker build -t image_retriever:v3 -f Retriever/Dockerfile .
 
-docker run --name con_retriever_5  --network=mynetw -d image_retriever:v3
+docker run --name con_retriever_5  -e USER=IRGC_NEW -e PASS=iran135 -e DBNAME=IranMalDB --network=mynetw -d image_retriever:v3
 
 docker build -t image_preprocessor:v4 -f Preprocessor/Dockerfile .
 
