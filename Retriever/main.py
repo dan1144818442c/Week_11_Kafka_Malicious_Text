@@ -26,6 +26,7 @@ def program_run_100_per_min(kafka_publisher,collection_fetch,sort_by,list_fields
                 for field in list_fields_str:
                     str_change(document,field)
             kafka_publisher.publish_message(topic=topic_name(document), message=document)
+        print(count)
         skip_amount += count
         time.sleep(60)
 
