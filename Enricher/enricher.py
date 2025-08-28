@@ -32,8 +32,12 @@ class Enricher_C:
         return self.dict_
 
     def _weapon_list(self,weapon_path:str):
-        with open(weapon_path, "r") as weapons:
-            return weapons.read().splitlines()
+        try:
+            with open(weapon_path, "r") as weapons:
+                return weapons.read().splitlines()
+        except:
+            print("didn't find this file")
+            return []
 
     def relevant_timestamp(self,text:str):
         date_time_pattern = r"\d{4}-\d{2}-\d{2}"
@@ -72,7 +76,8 @@ class Enricher_C:
         return self.dict_
 
     def activate_all_func(self, path_weapon_list):
-        self.add_relevant_timestamps()
-        self.detect_weapons_in_messages(path_weapon_list)
         self.add_sentiment_to_dict()
+        self.detect_weapons_in_messages(path_weapon_list)
+        self.add_relevant_timestamps()
+
         return self.dict_
