@@ -1,0 +1,11 @@
+pymongo
+kafka-python
+nltk
+click
+colorama
+dnspython
+joblib
+python-dotenv
+regex
+tqdm
+dotenv
